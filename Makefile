@@ -4,6 +4,6 @@ nightly:
 	git tag -d $(NIGHTLY_TAG) &> /dev/null
 	git push origin :$(NIGHTLY_TAG) &> /dev/null
 
-	git tag $(NIGHTLY_TAG)
-	git push origin $(NIGHTLY_TAG)
+	git tag $(NIGHTLY_TAG) &> /dev/null
+	git push origin $(NIGHTLY_TAG) &> /dev/null
 	git fetch --tags
