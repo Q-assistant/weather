@@ -14,14 +14,14 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Set up Go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
           go-version: 1.16.x
       -
         name: Release
-        uses: goreleaser/goreleaser-action@v1
+        uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --snapshot --skip-publish --rm-dist
+          args: release --prerelease=false --snapshot --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
