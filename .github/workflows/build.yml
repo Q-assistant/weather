@@ -23,6 +23,3 @@ jobs:
         with:
           version: latest
           args: release --snapshot --rm-dist
-      -
-        name: Recreate nightly tag
-        run: make nightly
