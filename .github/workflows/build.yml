@@ -18,10 +18,13 @@ jobs:
         with:
           go-version: 1.16.x
       -
+        name: Recreate nightly tag
+        run: make nightly
+      -
         name: Release
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --snapshot --rm-dist -f .goreleaser.nightly.yml
+          args: release --rm-dist -f .goreleaser.nightly.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
