@@ -27,7 +27,17 @@ jobs:
         with:
           go-version: 1.16.x
       -
+        name: Nightly Release
+        if: contains(github.ref, "v0.0.0")
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist -f .goreleaser.nightly.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      -
         name: Release
+        if: !contains(github.ref, "v0.0.0")
         uses: goreleaser/goreleaser-action@v1
         with:
           version: latest
