@@ -26,6 +26,13 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.16.x
+      - name: Delete Current Nightly Release
+        if: "contains(github.ref, 'v0.0.0')"
+        uses: larryjoelane/delete-release-action@v1.0.24
+        with:
+          release-name: weather-nightly
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
         name: Nightly Release
         if: "contains(github.ref, 'v0.0.0')"

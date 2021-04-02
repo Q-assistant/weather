@@ -16,12 +16,15 @@ const OpenWeatherMapName = "open-weather-map"
 type OpenWeatherMap struct {
 	key      string
 	secret   string
-	location string
+	location *Location
 	client   *http.Client
 }
 
 type OpenWeatherMapWeatherForecastResponse struct {
-	List []*OpenWeatherMapWeatherResponse `json:"list"`
+	TimeZone string                `json:"timezone"`
+	Current  *OpenWeatherMapMain   `json:"current"`
+	Minutely []*OpenWeatherMapMain `json:"minutely"`
+	Hourly   []*OpenWeatherMapMain `json:"hourly"`
 }
 
 type OpenWeatherMapWeatherResponse struct {
@@ -45,25 +48,39 @@ type OpenWeatherMapWeather struct {
 }
 
 type OpenWeatherMapMain struct {
-	Temp      float64 `json:"temp"`
-	FeelsLike float64 `json:"feels_like"`
-	TempMin   float64 `json:"temp_min"`
-	TempMax   float64 `json:"temp_max"`
-	Pressure  int     `json:"pressure"`
-	Humidity  float64 `json:"humidity"`
+	Dt        int64                    `json:"dt"`
+	Temp      float64                  `json:"temp"`
+	FeelsLike float64                  `json:"feels_like"`
+	TempMin   float64                  `json:"temp_min"`
+	TempMax   float64                  `json:"temp_max"`
+	Pressure  int                      `json:"pressure"`
+	Humidity  float64                  `json:"humidity"`
+	Weather   []*OpenWeatherMapWeather `json:"weather"`
 }
 
-func NewOpenWeatherMap(key string, secret string, location string) *OpenWeatherMap {
+type Config struct {
+	Key      string
+	Secret   string
+	Location *Location
+}
+
+type Location struct {
+	Lat  float64
+	Lon  float64
+	Name string
+}
+
+func NewOpenWeatherMap(cnf *Config) *OpenWeatherMap {
 	return &OpenWeatherMap{
-		key:      key,
-		secret:   secret,
-		location: location,
+		key:      cnf.Key,
+		secret:   cnf.Secret,
+		location: cnf.Location,
 		client:   http.DefaultClient,
 	}
 }
 
 func (owm *OpenWeatherMap) GetCurrent() (*Weather, error) {
-	req, err := owm.client.Get(fmt.Sprintf("%s/weather?q=%s&appid=%s&units=metric", OpenWeatherMapApiUrl, owm.location, owm.secret))
+	req, err := owm.client.Get(fmt.Sprintf("%s/weather?lat=%.3f&lon=%.3f&appid=%s&units=metric", OpenWeatherMapApiUrl, owm.location.Lat, owm.location.Lat, owm.secret))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +110,8 @@ func (owm *OpenWeatherMap) GetCurrent() (*Weather, error) {
 }
 
 func (owm *OpenWeatherMap) GetForecast() ([]*Weather, error) {
-	url := fmt.Sprintf("%s/onecall?q=%s&appid=%s&units=metric", OpenWeatherMapApiUrl, owm.location, owm.secret)
+	fmt.Println(owm.location.Lat, owm.location.Lat)
+	url := fmt.Sprintf("%s/onecall?lat=%.3f&lon=%.3f&appid=%s&units=metric", OpenWeatherMapApiUrl, owm.location.Lat, owm.location.Lon, owm.secret)
 	fmt.Println(url)
 	req, err := owm.client.Get(url)
 	if err != nil {
@@ -116,17 +134,17 @@ func (owm *OpenWeatherMap) GetForecast() ([]*Weather, error) {
 		return nil, fmt.Errorf("%s: %s", OpenWeatherMapName, err.Error())
 	}
 
-	list := make([]*Weather, 0, len(out.List))
-	for i, w := range out.List {
+	list := make([]*Weather, len(out.Hourly))
+	for i, w := range out.Hourly {
 		list[i] = &Weather{
 			Type:        w.Weather[0].Main,
-			DateTime:    time.Unix(w.DateTime, 0),
-			Description: w.Weather[0].Description,
-			Temp:        w.Main.Temp,
-			TempFeeling: w.Main.FeelsLike,
-			TempMin:     w.Main.TempMin,
-			TempMax:     w.Main.TempMax,
-			Humidity:    w.Main.Humidity,
+			DateTime:    time.Unix(w.Dt, 0),
+			TimeZone:    out.TimeZone,
+			Temp:        w.Temp,
+			TempFeeling: w.FeelsLike,
+			TempMin:     w.TempMin,
+			TempMax:     w.TempMax,
+			Humidity:    w.Humidity,
 		}
 	}
 

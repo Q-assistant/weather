@@ -146,6 +146,8 @@ github.com/q-assistant/proto v0.0.0-20210325084815-08ee9d4b0743 h1:idxm998P4fxyl
 github.com/q-assistant/proto v0.0.0-20210325084815-08ee9d4b0743/go.mod h1:FMtancdPO6nWtSbXEsSNYWVDj+70rLgxj8jtfIh85Lk=
 github.com/q-assistant/sdk v0.0.0-20210329085710-f0ae2721c0da h1:flEyI5c7BURPcJ9bothUs+oMfNTvIeLX2vdzk8+JGUE=
 github.com/q-assistant/sdk v0.0.0-20210329085710-f0ae2721c0da/go.mod h1:8uyOkirzb3qoG+rslCmYkN4klYBozGYQRQqQURsw7l8=
+github.com/q-assistant/sdk v0.0.0-20210402070154-8952a5de5929 h1:PSx/ALzOm8DJGbyjD28S0ZiQvfwrw4wt3A7V50i0zXk=
+github.com/q-assistant/sdk v0.0.0-20210402070154-8952a5de5929/go.mod h1:8uyOkirzb3qoG+rslCmYkN4klYBozGYQRQqQURsw7l8=
 github.com/ryanuber/columnize v0.0.0-20160712163229-9b3edd62028f h1:UFr9zpz4xgTnIE5yIMtWAMngCdZ9p/+q6lTbgelo80M=
 github.com/ryanuber/columnize v0.0.0-20160712163229-9b3edd62028f/go.mod h1:sm1tb6uqfes/u+d4ooFouqFdy9/2g9QGwK3SQygK0Ts=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529 h1:nn5Wsu0esKSJiIVhscUtVbo7ada43DJhG55ua/hjS5I=

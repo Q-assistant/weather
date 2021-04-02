@@ -5,6 +5,7 @@ import "time"
 type Weather struct {
 	Type        string
 	DateTime    time.Time
+	TimeZone    string
 	Description string
 	Temp        float64
 	TempFeeling float64

@@ -2,4 +2,4 @@ module weather
 
 go 1.16
 
-require github.com/q-assistant/sdk v0.0.0-20210329085710-f0ae2721c0da // indirect
+require github.com/q-assistant/sdk v0.0.0-20210402070154-8952a5de5929 // indirect
