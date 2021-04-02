@@ -23,3 +23,7 @@ jobs:
         with:
           version: latest
           args: release --snapshot --rm-dist
+
+      -
+        name: Trigger Nightly
+        run: make next
