@@ -31,8 +31,7 @@ jobs:
         uses: larryjoelane/delete-release-action@v1.0.24
         with:
           release-name: weather-nightly
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       -
         name: Nightly Release
         if: "contains(github.ref, 'v0.0.0')"
