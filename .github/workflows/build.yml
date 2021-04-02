@@ -15,3 +15,5 @@ jobs:
       -
         name: Trigger Nightly Release
         run: make next
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
